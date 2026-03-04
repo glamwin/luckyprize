@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LuckyPrize — Колесо фортуны</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <section class="card header-card">
+        <div>
+          <p class="tag">LuckyPrize</p>
+          <h1>Колесо фортуны</h1>
+          <p class="subtitle">Крути, выигрывай и пополняй баланс прямо на экране.</p>
+        </div>
+        <div class="balance-box">
+          <span>Баланс</span>
+          <strong id="balance">1000 ₽</strong>
+        </div>
+      </section>
+
+      <section class="wheel-card card">
+        <div class="wheel-wrap">
+          <div class="pointer" aria-hidden="true"></div>
+          <div class="wheel" id="wheel"></div>
+        </div>
+        <button id="spinButton" class="spin-btn">Крутить колесо</button>
+        <p class="result" id="result">Нажми кнопку, чтобы испытать удачу ✨</p>
+      </section>
+
+      <section class="card prizes-card">
+        <h2>Сектора и награды</h2>
+        <ul id="prizesList"></ul>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

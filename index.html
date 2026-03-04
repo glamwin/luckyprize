@@ -1,46 +1,103 @@
 <!doctype html>
-<html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LuckyPrize — Колесо фортуны</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <main class="app">
-      <section class="card header-card">
-        <div>
-          <p class="tag">LuckyPrize</p>
-          <h1>Колесо фортуны</h1>
-          <p class="subtitle">Крути, выигрывай и пополняй баланс прямо на экране.</p>
-        </div>
-        <div class="balance-box">
-          <span>Баланс</span>
-          <strong id="balance">1000 ₽</strong>
-        </div>
-      </section>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI Brainrots Miner</title>
+  <meta name="description" content="AI Brainrots Miner — static landing." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="bg">
+    <div class="grid"></div>
+    <div class="glow glow-a"></div>
+    <div class="glow glow-b"></div>
+  </div>
 
-      <section class="wheel-card card">
-        <div class="wheel-wrap">
-          <div class="pointer" aria-hidden="true"></div>
-          <div class="wheel" id="wheel"></div>
+  <header class="header">
+    <div class="container header__inner">
+      <div class="brand">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span class="brand__text">Secured</span>
+      </div>
+      <nav class="nav">
+        <a class="nav__link" href="#how">Instruction</a>
+        <a class="nav__link" href="#assets">Assets</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container main">
+    <section class="hero">
+      <h1 class="title">AI Brainrots Miner</h1>
+      <p class="subtitle">
+        Professional landing UI (static). Copy link, follow the instruction below.
+      </p>
+
+      <div class="panel" role="region" aria-label="Copy box">
+        <div class="panel__top">
+          <div class="panel__label">Link</div>
+          <div class="panel__meta">
+            <span class="pill">HTTPS</span>
+            <span class="pill">Secure</span>
+            <span class="pill">Verified</span>
+          </div>
         </div>
-        <button id="spinButton" class="spin-btn">Крутить колесо</button>
-        <p class="result" id="result">Нажми кнопку, чтобы испытать удачу ✨</p>
-      </section>
 
-      <section class="card prizes-card">
-        <h2>Сектора и награды</h2>
-        <ul id="prizesList"></ul>
-      </section>
-    </main>
+        <div class="copy">
+          <div class="copy__box">
+            <code id="copyTarget" class="copy__text">""</code>
+          </div>
+          <button id="copyBtn" class="btn" type="button">
+            <span class="btn__icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M9 9h10v10H9V9Z" stroke="currentColor" stroke-width="2" />
+                <path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" stroke="currentColor" stroke-width="2" />
+              </svg>
+            </span>
+            <span class="btn__text">Copy</span>
+          </button>
+        </div>
 
-    <script src="app.js"></script>
-  </body>
+        <div id="toast" class="toast" aria-live="polite" aria-atomic="true"></div>
+      </div>
+
+      <div id="how" class="how">
+        <div class="how__head">
+          <h2 class="how__title">Instruction</h2>
+        </div>
+
+        <div class="how__card">
+          <div class="how__line">1) Paste the code</div>
+          <div class="how__line">2) Run it</div>
+          <div class="how__line muted">Use only if you understand what it does.</div>
+        </div>
+      </div>
+
+      <div id="assets" class="assets">
+        <div class="assets__head">
+          <h2 class="assets__title">Assets</h2>
+        </div>
+
+        <div class="asset-grid" aria-label="Asset tags">
+          <div class="asset"><span class="asset__sym">BTC</span></div>
+          <div class="asset"><span class="asset__sym">ETH</span></div>
+          <div class="asset"><span class="asset__sym">USDT</span></div>
+          <div class="asset"><span class="asset__sym">SOL</span></div>
+          <div class="asset"><span class="asset__sym">BNB</span></div>
+          <div class="asset"><span class="asset__sym">TRX</span></div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <span class="muted">© <span id="year"></span> AI Brainrots Miner</span>
+      </footer>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
 </html>

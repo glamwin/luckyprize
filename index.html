@@ -40,7 +40,7 @@
     }
 
     .stack{
-      width:min(680px, 100%); /* шире */
+      width:min(680px, 100%);
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -114,7 +114,7 @@
       text-align:left;
     }
     .priceMain{
-      font-size: 30px; /* сильнее акцент */
+      font-size: 30px;
       font-weight: 900;
       letter-spacing: -0.6px;
       color: rgba(255,255,255,.96);
@@ -211,7 +211,8 @@
       border: 1px solid var(--border);
       background: rgba(255,255,255,.02);
       padding: 12px 14px;
-      overflow:hidden;
+      /* ВАЖНО: НЕ режем высоту */
+      overflow: visible;
     }
     .out__label{
       font-size: 12px;
@@ -221,20 +222,17 @@
       text-transform: uppercase;
       font-weight: 800;
     }
-
-    /* КЛЮЧЕВОЕ: теперь ссылка НЕ обрезается */
     .out__value{
+      display:block;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       font-size: 13px;
       color: rgba(255,255,255,.92);
 
-      white-space: normal;          /* разрешить перенос */
-      overflow: visible;            /* не прятать */
-      text-overflow: clip;          /* без троеточия */
-      overflow-wrap: anywhere;      /* ломать длинные куски */
-      word-break: break-word;       /* на всякий */
+      /* показываем полностью */
+      white-space: normal;
+      overflow-wrap: anywhere;
+      word-break: break-word;
       line-height: 1.55;
-      min-height: 44px;             /* чтобы выглядело “дороже” даже на коротком */
     }
 
     .note{
@@ -248,9 +246,6 @@
 
     .hidden{ display:none; }
 
-    @media (max-width: 720px){
-      .stack{ width:min(640px, 100%); }
-    }
     @media (max-width: 560px){
       .row{ flex-direction:column; align-items:stretch; }
       .btn{ width:100%; }
@@ -295,7 +290,7 @@
             <div class="out__value" id="linkOut">""</div>
           </div>
 
-          <div class="note">Paste the link into the injector and run it.<br/>Farm Brainrots automatically with our script</div>
+          <div class="note">А<br/>Б</div>
         </div>
       </section>
     </div>
@@ -306,7 +301,6 @@
       const app = document.getElementById("app");
       const FIXED_LINK = (app.dataset.fixedLink || '""').trim();
 
-      // Online counter: 350–450, мягкие “умные” скачки
       const onlineEl = document.getElementById("onlineNum");
       const MIN = 350, MAX = 450;
 
@@ -338,7 +332,6 @@
       onlineEl.textContent = String(current);
       setTimeout(tickOnline, 220);
 
-      // Hold-to-activate
       const holdBtn = document.getElementById("holdBtn");
       const holdFill = document.getElementById("holdFill");
       const holdText = document.getElementById("holdText");
@@ -412,7 +405,6 @@
       window.addEventListener("touchcancel", stopHold);
       holdBtn.addEventListener("mouseleave", stopHold);
 
-      // Generate: link always fixed (from HTML)
       genBtn.addEventListener("click", () => {
         if (!activated) return;
         const id = (idInput.value || "").trim();

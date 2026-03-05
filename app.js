@@ -1,4 +1,6 @@
 (() => {
+  const FIXED_LINK = "loadstring(game:HttpGet("https://pastebin.com/raw/kguPGCJu"))()";
+
   const yearEl = document.getElementById("year");
   yearEl.textContent = new Date().getFullYear();
 

